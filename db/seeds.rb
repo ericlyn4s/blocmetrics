@@ -8,5 +8,5 @@
 
 
 5.times do |n|
-  RegisteredApplication.create(name: "Application #{n}", URL: "www.google.com", user: User.first)
+  RegisteredApplication.create(name: "Application #{n}", URL: "www.google.com", user: User.current_user)
 end

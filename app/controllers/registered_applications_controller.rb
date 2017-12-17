@@ -8,20 +8,25 @@ class RegisteredApplicationsController < ApplicationController
     @registered_application = RegisteredApplication.new
   end
 
-    def create
+  def create
         @registered_application = RegisteredApplication.new
+
+
+        @registered_application.user = current_user
         @registered_application.name = params[:registered_application][:name]
+        @registered_application.URL = params[:registered_application][:URL]
 
 
 
         if @registered_application.save
-          redirect_to @registered_application, notice: "Application was registered successfully."
-          redirect_to @registered_application
+          flash[:notice] = "Application was registered successfully."
+          redirect_to welcome_index_path
+
         else
           flash[:error] = "Error registering application. Please try again."
           render :new
         end
-      end
+  end
 
   def edit
     @registered_application = RegisteredApplication.find(params[:id])
@@ -42,13 +47,13 @@ class RegisteredApplicationsController < ApplicationController
 
   def destroy
     @registered_application = RegisteredApplication.find(params[:id])
-    name = @registered_application.name
-    authorize @registered_application
 
     if @registered_application.destroy
-      flash[:notice] = "\"#{name}\" was deleted successfully."
+      flash[:notice] = "\"#{@registered_application.name}\" was deleted successfully."
+      redirect_to registered_applications_path
     else
       flash[:error] = "Error deleting application. Please try again."
+
       end
     end
   end
