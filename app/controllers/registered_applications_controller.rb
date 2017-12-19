@@ -2,10 +2,16 @@ class RegisteredApplicationsController < ApplicationController
 
   def index
     @registered_applications = RegisteredApplication.all
+    @events = @registered_application.events(:group => 'name')
+    @events.name = params[:event][:name]
   end
 
   def new
     @registered_application = RegisteredApplication.new
+  end
+
+  def show
+    @registered_application = RegisteredApplication.find(params[:id])
   end
 
   def create
@@ -50,7 +56,7 @@ class RegisteredApplicationsController < ApplicationController
 
     if @registered_application.destroy
       flash[:notice] = "\"#{@registered_application.name}\" was deleted successfully."
-      redirect_to registered_applications_path
+      redirect_to welcome_index_path
     else
       flash[:error] = "Error deleting application. Please try again."
 

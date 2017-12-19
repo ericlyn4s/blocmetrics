@@ -1,9 +1,12 @@
 <h1>Blocmetrics</h1>
 <p>Welcome to Blocmetrics, an analytics service to track events on websites.</p>
 
-<% current_user.registered_applications.each do |i| %>
-    <ul><%= i.name %>
-    <%= i.URL %>
-    <%= link_to "Delete", @registered_application, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this application?'} %>
+<% current_user.registered_applications.each do |app| %>
+    <ul><strong><%= link_to(app.name, app) %></strong>
+        <i><%= app.URL %></i>
+    <div class = "pull-right">
+    <%= link_to "Delete", app, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this application?'} %>
+  </div>
+    <h1>
   </ul>
 <% end %>

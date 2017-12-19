@@ -8,5 +8,8 @@
 
 
 5.times do |n|
-  RegisteredApplication.create(name: "Application #{n}", URL: "www.google.com", user: User.current_user)
+  currentApp = RegisteredApplication.create(name: "Application #{n}", URL: "www.google.com", user: User.first)
+  2.times do |n|
+    Event.create(name: "Event #{n}", registered_application: RegisteredApplication.last)
+  end
 end
