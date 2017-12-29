@@ -2,8 +2,6 @@ class RegisteredApplicationsController < ApplicationController
 
   def index
     @registered_applications = RegisteredApplication.all
-    @events = @registered_application.events(:group => 'name')
-    @events.name = params[:event][:name]
   end
 
   def new

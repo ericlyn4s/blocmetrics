@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
 
-  get 'events/index'
+  resources :events, only: [:index, :show]
 
-  get 'events/show'
-  
   resources :registered_applications, except: [:index]
 
   devise_for :users
