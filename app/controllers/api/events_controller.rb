@@ -2,7 +2,9 @@ class API::EventsController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  before_filter :set_access_control_headers
+  skip_before_action :authenticate_user!
+
+  before_action :set_access_control_headers
 
    def set_access_control_headers
  # #1
@@ -12,8 +14,6 @@ class API::EventsController < ApplicationController
  # #3
      headers['Access-Control-Allow-Headers'] = 'Content-Type'
    end
-
-  skip_before_action :verify_authenticity_token
 
   def create
     app = RegisteredApplication.find_by(url: request.env['HTTP_ORIGIN'])
@@ -29,9 +29,13 @@ class API::EventsController < ApplicationController
     end
   end
 
+  def preflight
+    head 200
+  end
+
   private
 
   def event_params
-    params.permit(:name)
+    params.require(:event).permit(:name)
   end
 end
