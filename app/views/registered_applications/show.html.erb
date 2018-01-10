@@ -1,4 +1,3 @@
 <h1><%= @registered_application.name %></h1>
-<% @registered_application.events.each do |i| %>
-    <strong><h3>Name:</h3><%= i.name %></strong>
-<% end %>
+<%= pie_chart @registered_application.events.group(:name).count %>
+<%= line_chart @registered_application.events.group_by_day(:created_at).count %>
